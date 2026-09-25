@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
@@ -12,81 +11,55 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      # 1. Checkout source code
       - name: Checkout
         uses: actions/checkout@v4
 
-
-      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22'
           cache: npm
 
-
-      # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
 
-
-      # 4. Create environment file
       - name: Create environment file
         run: |
           echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" >> .env
           echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> .env
 
-
-      # 5. Build Web App
       - name: Build Web App
         run: npm run build
 
+      - name: Sync Capacitor
+        run: npx cap sync android
 
-      # 6. Setup Java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: '21'
+          cache: gradle
 
-
-      # 7. Setup Android SDK
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools'
 
-
-      # 8. Install required Android SDK packages
       - name: Install Android SDK packages
         run: |
           sdkmanager "platforms;android-35"
           sdkmanager "build-tools;35.0.0"
 
-
-      # 9. Accept Android licenses
-      - name: Accept Android licenses
-        run: |
-          yes | sdkmanager --licenses || true
-
-
-      # 10. Sync Capacitor
-      - name: Sync Capacitor
-        run: npx cap sync android
-
-
-      # 11. Build Debug APK
       - name: Build Debug APK
         working-directory: android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
-
-      # 12. Upload APK
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Madrasah-App-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
