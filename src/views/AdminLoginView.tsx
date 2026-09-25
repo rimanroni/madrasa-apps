@@ -31,43 +31,71 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!password.trim()) {
-      setErrorMessage('অনুগ্রহ করে অ্যাডমিন পাসওয়ার্ড প্রদান করুন।');
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!password.trim()) {
+    setErrorMessage('অনুগ্রহ করে অ্যাডমিন পাসওয়ার্ড প্রদান করুন।');
+    return;
+  }
+
+  setLoading(true);
+  setErrorMessage('');
+
+  try {
+    const enteredPassword = password.trim();
+
+    // ==========================================
+    // LOCAL ADMIN PASSWORDS
+    // ==========================================
+    const MAIN_ADMIN_PASSWORD = 'riman100@@##';
+    const SUPER_ADMIN_PASSWORD = 'supar_admin1122';
+
+    let role: 'main_admin' | 'super_admin' | null = null;
+
+    if (enteredPassword === MAIN_ADMIN_PASSWORD) {
+      role = 'main_admin';
+    } else if (enteredPassword === SUPER_ADMIN_PASSWORD) {
+      role = 'super_admin';
+    }
+
+    // Wrong password
+    if (!role) {
+      setErrorMessage(
+        'ভুল পাসওয়ার্ড! অ্যাডমিন ড্যাশবোর্ডে প্রবেশের অনুমতি নেই।'
+      );
       return;
     }
 
-    setLoading(true);
-    setErrorMessage('');
+    // Generate local session token
+    const token =
+      'maktab-' +
+      role +
+      '-' +
+      Date.now() +
+      '-' +
+      Math.random().toString(36).substring(2);
 
-    try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: password.trim() })
-      });
+    // Login directly without server
+    loginAdmin(token, role);
 
-      const data = await response.json();
+    showToast(
+      role === 'super_admin'
+        ? 'সুপার অ্যাডমিন হিসেবে সফলভাবে লগইন হয়েছে।'
+        : 'প্রধান অ্যাডমিন হিসেবে সফলভাবে লগইন হয়েছে।',
+      'success'
+    );
 
-      if (response.ok && data.success) {
-        loginAdmin(data.token, data.role);
-        showToast(data.message || 'সফলভাবে অ্যাডমিন ড্যাশবোর্ডে লগইন হয়েছে।', 'success');
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-      } else {
-        setErrorMessage(data.message || 'ভুল পাসওয়ার্ড! অ্যাডমিন ড্যাশবোর্ডে প্রবেশের অনুমতি নেই।');
-      }
-    } catch (err) {
-      console.error('Login request error:', err);
-      // Fallback verification if server endpoint is unavailable
-      const res = await fetch('/api/admin/verify', { method: 'POST' }).catch(() => null);
-      setErrorMessage('লগইন সার্ভারের সাথে সংযোগে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।');
-    } finally {
-      setLoading(false);
+    if (onLoginSuccess) {
+      onLoginSuccess();
     }
-  };
+  } catch (err) {
+    console.error('Local login error:', err);
+    setErrorMessage('লগইন করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-linear-to-b from-emerald-950 via-slate-900 to-slate-950 text-white flex flex-col justify-between p-4 sm:p-6 lg:p-8 font-sans">
