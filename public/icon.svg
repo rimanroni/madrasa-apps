@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#047857"/>
+      <stop offset="50%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- Rounded Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  
+  <!-- Inner Ring Motif -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="url(#goldGrad)" stroke-width="4" opacity="0.35" stroke-dasharray="8 8"/>
+  <circle cx="256" cy="256" r="222" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Islamic Dome & Minaret Silhouette -->
+  <g filter="url(#shadow)" fill="url(#goldGrad)">
+    <!-- Crescent Moon & Star at apex -->
+    <path d="M 264 96 A 22 22 0 1 1 246 128 A 18 18 0 1 0 264 96 Z" fill="#fbbf24"/>
+    <polygon points="274,106 278,114 286,114 280,119 282,127 274,122 267,127 269,119 263,114 271,114" fill="#fbbf24"/>
+    
+    <!-- Dome -->
+    <path d="M 256 138 C 220 180 186 215 186 250 L 326 250 C 326 215 292 180 256 138 Z"/>
+    
+    <!-- Dome Base & Arch -->
+    <rect x="180" y="250" width="152" height="18" rx="4" fill="#fef3c7"/>
+    <path d="M 226 250 C 226 235 240 224 256 224 C 272 224 286 235 286 250 Z" fill="#064e3b"/>
+  </g>
+
+  <!-- Open Book (Rehal / Quran) Representation -->
+  <g filter="url(#shadow)">
+    <!-- Left page -->
+    <path d="M 256 320 C 220 295 160 300 130 315 L 130 385 C 160 370 220 365 256 390 Z" fill="#ffffff"/>
+    <!-- Right page -->
+    <path d="M 256 320 C 292 295 352 300 382 315 L 382 385 C 352 370 292 365 256 390 Z" fill="#f8fafc"/>
+    <!-- Center spine & lines -->
+    <line x1="256" y1="320" x2="256" y2="390" stroke="#059669" stroke-width="4"/>
+    <!-- Book lines on left -->
+    <line x1="150" y1="335" x2="236" y2="328" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="150" y1="350" x2="236" y2="343" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="150" y1="365" x2="236" y2="358" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    <!-- Book lines on right -->
+    <line x1="276" y1="328" x2="362" y2="335" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="276" y1="343" x2="362" y2="350" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="276" y1="358" x2="362" y2="365" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Wooden Stand (Rehal) base -->
+    <polygon points="210,400 256,380 302,400 276,425 256,410 236,425" fill="#d97706"/>
+  </g>
+
+  <!-- Star Embellishments -->
+  <circle cx="120" cy="180" r="4" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="392" cy="180" r="4" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="100" cy="240" r="3" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="412" cy="240" r="3" fill="#fbbf24" opacity="0.6"/>
+</svg>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">নূরানী মক্তব</string>
+    <string name="title_activity_main">নূরানী মক্তব</string>
+    <string name="package_name">com.nurani.maktab</string>
+    <string name="custom_url_scheme">com.nurani.maktab</string>
+</resources>

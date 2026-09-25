@@ -1,0 +1,6 @@
+{
+  "name": "নূরানী মক্তব - আর্থিক হিসাব ও ব্যবস্থাপনা সিস্টেম",
+  "description": "গ্রামীন মক্তব ও মাদরাসার আধুনিক স্বচ্ছ আর্থিক হিসাব, সদস্য, অনুদান, প্রকল্প, নোটিশ ও লেজার ব্যবস্থাপনা প্ল্যাটফর্ম",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
