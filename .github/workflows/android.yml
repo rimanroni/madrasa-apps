@@ -20,10 +20,9 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
 
-  
       - name: Build Web App
         run: npm run build
 
@@ -34,19 +33,14 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: '17'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK packages
         run: |
+          yes | sdkmanager --licenses || true
           sdkmanager "platform-tools"
           sdkmanager "platforms;android-35"
           sdkmanager "build-tools;35.0.0"
-
-      - name: Accept Android licenses
-        run: yes | sdkmanager --licenses || true
 
       - name: Build Debug APK
         working-directory: android
